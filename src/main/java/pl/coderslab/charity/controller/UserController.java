@@ -1,64 +1,55 @@
 package pl.coderslab.charity.controller;
 
-import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.coderslab.charity.entity.User;
-import pl.coderslab.charity.pojo.ViewMode;
-import pl.coderslab.charity.repository.UserRepository;
-import pl.coderslab.charity.service.AuthenticationService;
+import pl.coderslab.charity.service.UserService;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserService userService;
 
-	@Autowired
-	private AuthenticationService authenticationService;
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping("/register")
 	public String registerUser(Model model) {
-		model.addAttribute("ViewMode", new ViewMode());
+		model.addAttribute("user", new User());
 		return "register";
 	}
 
 	@PostMapping("/register")
-	public String registerUser(@ModelAttribute ViewMode viewMode) {
-		if (!authenticationService.givenEmailExistInUserDatabase(viewMode.getEmail())) {
-			String hashedPassword = BCrypt.hashpw(viewMode.getPassword(), BCrypt.gensalt());
-			viewMode.setPassword(hashedPassword);
-			User user = new User();
-			user.setPassword(viewMode.getPassword());
-			user.setEmail(viewMode.getEmail());
-			user.setFirstName(viewMode.getFirstName());
-			user.setLastName(viewMode.getLastName());
-			userRepository.save(user);
-			return "redirect:/addDonation/" + user.getId();
+	public String registerUser(@Valid @ModelAttribute User user, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return "register";
 		}
-		return "register";
+		User userExists = userService.findByEmail(user.getEmail());
+		if (userExists != null) {
+			model.addAttribute("userExists", "There is already a user registered with the email provided");
+			return "register";
+		}
+		userService.saveUser(user);
+		return "redirect:/login";
 	}
 
 	@GetMapping("/login")
-	public String loginUser(Model model) {
-		model.addAttribute("viewMode", new ViewMode());
-		return "login";
-	}
-
-	@PostMapping("/login")
-	public String loginUser(@ModelAttribute ViewMode viewMode) {
-		if (authenticationService.givenEmailExistInUserDatabase(viewMode.getEmail())) {
-			User user = authenticationService.authenticateUser(viewMode.getEmail(), viewMode.getPassword());
-			if (user != null) {
-				return "redirect:/addDonation/" + user.getId();
-			}
-		}
+	public String loginUser(Model model, String error, String logout) {
+		if (error != null)
+			model.addAttribute("error", "Your username and password is invalid.");
+		if (logout != null)
+			model.addAttribute("message", "You have been logged out successfully.");
 		return "login";
 	}
 
 }
+
 

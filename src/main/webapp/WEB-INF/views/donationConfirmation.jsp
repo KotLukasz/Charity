@@ -6,16 +6,16 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Charity</title>
+    <link rel="stylesheet"  type="text/css" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
-<header class="header--form-page">
-<%@ include file="headerLogin.jspf" %>
 
-<body>
+<header class="header--form-page">
+<%@ include file="header.jspf" %>
+
     <div class="slogan container container--90">
         <h2>
             Dziękujemy za przesłanie formularza</br> Na maila prześlemy wszelkie
@@ -23,9 +23,6 @@
         </h2>
     </div>
 </header>
-
 <%@ include file="footer.jspf" %>
 
-    <script src="<c:url value="resources/js/app.js"/>"></script>
-</body>
-</html>
+    <script type="text/javascript" src="<c:url value="/resources/js/app.js"/>"></script>

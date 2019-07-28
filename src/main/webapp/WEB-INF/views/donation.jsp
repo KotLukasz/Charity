@@ -4,20 +4,21 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form"
            uri="http://www.springframework.org/tags/form" %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Charity</title>
+    <link rel="stylesheet"  type="text/css" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
-<body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
 <header class="header--form-page">
-    <%@ include file="headerLogin.jspf" %>
+    <%@ include file="header.jspf" %>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -46,7 +47,7 @@
         </div>
     </div>
 </header>
-
+<body>
 <section class="form--steps">
     <div class="form--steps-instructions">
         <div class="form--steps-container">
@@ -236,8 +237,7 @@
 
 
 <%@ include file="footer.jspf" %>
-
-<script src="<c:url value="/resources/js/app.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/app.js"/>"></script>
 
 </body>
 </html>

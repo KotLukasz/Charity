@@ -11,40 +11,44 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Document</title>
-    <link rel="stylesheet" href="<c:url value="resources/css/style.css"/>"/>
+    <title>Charity</title>
+    <link rel="stylesheet"  type="text/css" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
-<body>
+
 <header>
-
-    <%@ include file="header.jspf" %>
-
+<%@ include file="header.jspf" %>
 </header>
-
 <section class="login-page">
     <h2>Załóż konto</h2>
-    <form:form modelAttribute="ViewMode" >
+    <div>${userExists}</div>
+    <form:form modelAttribute="user" method="post">
         <div class="form-group">
-            <form:input  name="firstName" placeholder="Imię" path="firstName"/>
+            <form:errors path="firstName"/>
+            <form:input name="firstName" placeholder="Imię" path="firstName"/>
         </div>
         <div class="form-group">
-            <form:input  name="lastName" placeholder="Nazwisko" path="lastName"/>
+            <form:errors path="lastName"/>
+            <form:input name="lastName" placeholder="Nazwisko" path="lastName"/>
         </div>
         <div class="form-group">
-            <form:input  name="email" placeholder="Email" path="email"/>
+            <form:errors path="email"/>
+            <form:input name="email" placeholder="Email" path="email"/>
         </div>
         <div class="form-group">
-            <form:password  name="password" placeholder="Hasło" path="password"/>
+            <form:errors path="password"/>
+            <form:password name="password" placeholder="Hasło" path="password"/>
         </div>
-        <div class="form-group">
-            <input name="password2" placeholder="Powtórz hasło"/>
-        </div>
+        <%--        <div class="form-group">--%>
+        <%--            <input name="password2" placeholder="Powtórz hasło"/>--%>
+        <%--        </div>--%>
 
         <div class="form-group form-group--buttons">
-            <a href="<c:url value="/login"/>"  class="btn btn--without-border">Zaloguj się</a>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <a href="<c:url value="/login"/>" class="btn btn--without-border">Zaloguj się</a>
             <button class="btn" type="submit">Załóż konto</button>
         </div>
     </form:form>
 </section>
 
 <%@ include file="footer.jspf" %>
+<script type="text/javascript" src="<c:url value="/resources/js/app.js"/>"></script>
