@@ -18,7 +18,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <header class="header--form-page">
-    <jsp:include page="header.jsp" />
+    <jsp:include page="header.jsp"/>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -76,13 +76,21 @@
         <form:form modelAttribute="donation" method="post" id="form">
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
-                <div>
-                    <form:errors path="categories"/>
-                    <label>
-                        <form:checkboxes path="categories" class="form-group form-group--checkbox"
-                                         items="${listCategory}" itemValue="id" itemLabel="name" id="categoriesForm"/>
-                    </label>
-                </div>
+                    <%--                <c:forEach items="${listCategory}" var="listCategory">--%>
+                    <%--                    <div class="form-group form-group--checkbox">--%>
+                    <%--                        <label>--%>
+                    <%--                            <form:checkbox path="categories"--%>
+                    <%--                                           value="${listCategory}"/>--%>
+                    <%--                            <span class="checkbox"></span>--%>
+                    <%--                            <span class="description">${listCategory.name}</span>--%>
+                    <%--                        </label>--%>
+                    <%--                    </div>--%>
+                    <%--                </c:forEach>--%>
+                    <%--                <div class="form-group form-group--buttons">--%>
+                <label>
+                    <form:checkboxes path="categories" class="form-group form-group--checkbox"
+                                     items="${listCategory}" itemValue="id" itemLabel="name" id="categoriesForm"/>
+                </label>
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn next-step" class="buttonStepForm">Dalej</button>
                 </div>
@@ -93,7 +101,6 @@
                 <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
 
                 <div class="form-group form-group--inline">
-                    <form:errors path="quantity"/>
                     <label>
                         <form:input path="quantity" id="quantityForm" name="quantityForm"/>
                     </label>
@@ -109,18 +116,24 @@
             <!-- STEP 4 -->
             <div data-step="3">
                 <h3>Wybierz organizacje, której chcesz pomóc:</h3>
-                <form:errors path="institution"/>
-                <c:forEach items="${listInstitutions}" var="temp">
-                <span class="description">
-                  <div class="title">${temp.name}</div>
-                  </span>
-                    <form:radiobutton class="form-group form-group--checkbox" path="institution" id="institutionForm" name="institutionFormName" itemValue="id" value="${temp}"/>
-                </c:forEach>
+                <div class="form-group form-group--checkbox">
+                    <c:forEach items="${listInstitutions}" var="institution">
+                        <label>
+                            <form:radiobutton path="institution" value="${institution}" title="${institution.name}"/>
+                            <span class="checkbox radio"></span>
+                            <span class="description">
+                                <div class="title">${institution.name}</div>
+                                <div class="subtitle">Cel i misja: ${institution.description}</div>
+                            </span>
+                        </label>
+                    </c:forEach>
+                </div>
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
                     <button type="button" class="btn next-step" class="buttonStepForm">Dalej</button>
                 </div>
             </div>
+
 
             <!-- STEP 5 -->
             <div data-step="4">
@@ -129,24 +142,20 @@
                 <div class="form-section form-section--columns">
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
-                        <form:errors path="street"/>
                         <div class="form-group form-group--inline">
                             <label> Ulica <form:input path="street" id="streetForm"/> </label>
                         </div>
-                        <form:errors path="city"/>
                         <div class="form-group form-group--inline">
                             <label> Miasto <form:input path="city" id="cityForm"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <form:errors path="zipCode"/>
                             <label>
                                 Kod pocztowy <form:input path="zipCode" id="zipCodeForm"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <form:errors path="telephone"/>
                             <label>
                                 Numer telefonu <form:input path="telephone" type="phone" id="telephoneForm"/>
                             </label>
@@ -155,11 +164,9 @@
 
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
-                        <form:errors path="pickUpDate"/>
                         <div class="form-group form-group--inline">
                             <label> Data <form:input type="date" path="pickUpDate" id="dateForm"/> </label>
                         </div>
-                        <form:errors path="pickUpTime"/>
                         <div class="form-group form-group--inline">
                             <label> Godzina <form:input type="time" path="pickUpTime" id="timeForm"/></label>
                         </div>
@@ -232,7 +239,7 @@
 </section>
 
 
-<jsp:include page="footer.jsp" />
+<jsp:include page="footer.jsp"/>
 
 <script type="text/javascript" src="<c:url value="/resources/js/app.js"/>"></script>
 
