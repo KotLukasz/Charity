@@ -12,7 +12,7 @@ import pl.coderslab.charity.service.CurrentUser;
 @RequestMapping("/admin")
 public class AdminController {
 
-	@GetMapping("/admin")
+	@GetMapping()
 	@ResponseBody
 	public String admin(@AuthenticationPrincipal CurrentUser customUser) {
 		User entityUser = customUser.getUser();

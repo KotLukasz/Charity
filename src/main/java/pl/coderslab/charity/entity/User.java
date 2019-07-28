@@ -14,18 +14,18 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty
+	@NotEmpty(message = "{firstName.notEmpty}")
 	private String firstName;
 
-	@NotEmpty
+	@NotEmpty(message = "{lastName.notEmpty}")
 	private String lastName;
 
 	@Column(unique = true)
 	@Email
-	@NotEmpty
+	@NotEmpty(message = "{email.notEmpty}")
 	private String email;
 
-	@Size(min = 8)
+	@Size(min=8, message = "{password.size}")
 	private String password;
 
 	@OneToMany(mappedBy = "user")

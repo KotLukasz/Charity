@@ -17,7 +17,7 @@
 
 <header>
 
-    <%@ include file="header.jspf" %>
+    <jsp:include page="header.jsp" />
 
 </header>
 
@@ -42,4 +42,4 @@
     </form>
 </section>
 
-<%@ include file="footer.jspf" %>
+<jsp:include page="footer.jsp" />

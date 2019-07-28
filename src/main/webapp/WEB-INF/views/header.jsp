@@ -12,7 +12,7 @@
             <ul class="dropdown">
                 <li><a href="#">Profil</a></li>
                 <li><a href="#">Ustawienia</a></li>
-                <li><a href="<c:url value="/user/addDonation"/>">Dodaj zbórkę</a></li>
+                <li><a href="<c:url value="/user/donation/addDonation"/>">Dodaj zbórkę</a></li>
                 <li><a href="#">Moje zbiórki</a></li>
                 <li>
                     <form action="<c:url value="/logout"/>" method="post">

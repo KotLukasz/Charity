@@ -13,17 +13,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Charity</title>
-    <link rel="stylesheet"  type="text/css" href="<c:url value="/resources/css/style.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/style.css"/>"/>
 </head>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <header class="header--form-page">
-    <%@ include file="header.jspf" %>
+    <jsp:include page="header.jsp" />
 
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
-                Oddaj rzeczy, których już nie chcesz<br />
+                Oddaj rzeczy, których już nie chcesz<br/>
                 <span class="uppercase">potrzebującym</span>
             </h1>
 
@@ -73,17 +73,18 @@
 
 
         <!-- STEP 1: class .active is switching steps -->
-        <form:form modelAttribute="donation" method="post">
+        <form:form modelAttribute="donation" method="post" id="form">
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
                 <div>
+                    <form:errors path="categories"/>
                     <label>
                         <form:checkboxes path="categories" class="form-group form-group--checkbox"
-                                         items="${listCategory}" itemValue="id" itemLabel="name"/>
+                                         items="${listCategory}" itemValue="id" itemLabel="name" id="categoriesForm"/>
                     </label>
                 </div>
                 <div class="form-group form-group--buttons">
-                    <button type="button" class="btn next-step">Dalej</button>
+                    <button type="button" class="btn next-step" class="buttonStepForm">Dalej</button>
                 </div>
             </div>
 
@@ -92,14 +93,15 @@
                 <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
 
                 <div class="form-group form-group--inline">
+                    <form:errors path="quantity"/>
                     <label>
-                        <form:input path="quantity" id="quantityForm"/>
+                        <form:input path="quantity" id="quantityForm" name="quantityForm"/>
                     </label>
                 </div>
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
-                    <button type="button" class="btn next-step">Dalej</button>
+                    <button type="button" class="btn next-step" id="buttonStepForm2">Dalej</button>
                 </div>
             </div>
 
@@ -107,23 +109,16 @@
             <!-- STEP 4 -->
             <div data-step="3">
                 <h3>Wybierz organizacje, której chcesz pomóc:</h3>
-
-                    <%--                <div class="form-group form-group--checkbox">--%>
-                    <%--                    <label>--%>
-                <form:radiobuttons path="institution" items="${listInstitutions}" itemValue="id"
-                                   class="form-group form-group--checkbox" itemLabel="name" id="institutionForm"/>
-                    <%--                        <span class="checkbox radio"></span>--%>
-                    <%--                        <span class="description">--%>
-                    <%--                                              <div class="title"></div>--%>
-                    <%--                                              <div class="subtitle">--%>
-                    <%--                                              </div>--%>
-                    <%--                                            </span>--%>
-                    <%--                    </label>--%>
-                    <%--                </div>--%>
-
+                <form:errors path="institution"/>
+                <c:forEach items="${listInstitutions}" var="temp">
+                <span class="description">
+                  <div class="title">${temp.name}</div>
+                  </span>
+                    <form:radiobutton class="form-group form-group--checkbox" path="institution" id="institutionForm" name="institutionFormName" itemValue="id" value="${temp}"/>
+                </c:forEach>
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
-                    <button type="button" class="btn next-step">Dalej</button>
+                    <button type="button" class="btn next-step" class="buttonStepForm">Dalej</button>
                 </div>
             </div>
 
@@ -134,21 +129,24 @@
                 <div class="form-section form-section--columns">
                     <div class="form-section--column">
                         <h4>Adres odbioru</h4>
+                        <form:errors path="street"/>
                         <div class="form-group form-group--inline">
                             <label> Ulica <form:input path="street" id="streetForm"/> </label>
                         </div>
-
+                        <form:errors path="city"/>
                         <div class="form-group form-group--inline">
                             <label> Miasto <form:input path="city" id="cityForm"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <form:errors path="zipCode"/>
                             <label>
                                 Kod pocztowy <form:input path="zipCode" id="zipCodeForm"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
+                            <form:errors path="telephone"/>
                             <label>
                                 Numer telefonu <form:input path="telephone" type="phone" id="telephoneForm"/>
                             </label>
@@ -157,10 +155,11 @@
 
                     <div class="form-section--column">
                         <h4>Termin odbioru</h4>
+                        <form:errors path="pickUpDate"/>
                         <div class="form-group form-group--inline">
                             <label> Data <form:input type="date" path="pickUpDate" id="dateForm"/> </label>
                         </div>
-
+                        <form:errors path="pickUpTime"/>
                         <div class="form-group form-group--inline">
                             <label> Godzina <form:input type="time" path="pickUpTime" id="timeForm"/></label>
                         </div>
@@ -175,7 +174,7 @@
                 </div>
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
-                    <button type="button" class="btn next-step">Dalej</button>
+                    <button type="button" class="btn next-step" class="buttonStepForm">Dalej</button>
                 </div>
             </div>
 
@@ -196,9 +195,7 @@
 
                             <li>
                                 <span class="icon icon-hand"></span>
-                                <span class="summary--text" id="institutionFormCompleted"
-                                ></span
-                                >
+                                <span class="summary--text" id="institutionFormCompleted"></span>
                             </li>
                         </ul>
                     </div>
@@ -227,7 +224,7 @@
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step">Wstecz</button>
-                    <button type="submit" class="btn">Potwierdzam</button>
+                    <button id="submitForm" type="submit" class="btn">Potwierdzam</button>
                 </div>
             </div>
         </form:form>
@@ -235,8 +232,8 @@
 </section>
 
 
+<jsp:include page="footer.jsp" />
 
-<%@ include file="footer.jspf" %>
 <script type="text/javascript" src="<c:url value="/resources/js/app.js"/>"></script>
 
 </body>

@@ -14,7 +14,7 @@
 </head>
 
 <header class="header--form-page">
-<%@ include file="header.jspf" %>
+    <jsp:include page="header.jsp" />
 
     <div class="slogan container container--90">
         <h2>
@@ -23,6 +23,7 @@
         </h2>
     </div>
 </header>
-<%@ include file="footer.jspf" %>
+
+<jsp:include page="footer.jsp" />
 
     <script type="text/javascript" src="<c:url value="/resources/js/app.js"/>"></script>

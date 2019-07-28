@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.entity.Category;
 import pl.coderslab.charity.entity.Donation;
@@ -14,10 +15,11 @@ import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.service.CurrentUser;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/donation")
 public class DonationController {
 
 	@Autowired
@@ -48,7 +50,10 @@ public class DonationController {
 	}
 
 	@PostMapping("/addDonation")
-	public String saveDonation(@ModelAttribute Donation donation, @AuthenticationPrincipal CurrentUser customUser, Model model) {
+	public String saveDonation(@Valid @ModelAttribute Donation donation, BindingResult result, @AuthenticationPrincipal CurrentUser customUser, Model model) {
+		if (result.hasErrors()) {
+			return "donation";
+		}
 		User entityUser = customUser.getUser();
 		model.addAttribute("customUser", entityUser);
 		donation.setUser(entityUser);
