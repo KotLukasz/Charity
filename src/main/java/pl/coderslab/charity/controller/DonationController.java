@@ -1,6 +1,7 @@
 package pl.coderslab.charity.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import pl.coderslab.charity.repository.CategoryRepository;
 import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.UserRepository;
+import pl.coderslab.charity.service.CategoryService;
 
 import java.util.List;
 
@@ -25,7 +27,8 @@ public class DonationController {
 	private InstitutionRepository institutionRepository;
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	@Qualifier("cacheCategoryService")
+	private CategoryService categoryService;
 
 	@Autowired
 	private DonationRepository donationRepository;
@@ -35,7 +38,7 @@ public class DonationController {
 
 	@ModelAttribute("listCategory")
 	public List<Category> listCategory() {
-		return categoryRepository.findAll();
+		return categoryService.getAllCategories();
 	}
 
 	@ModelAttribute("listInstitutions")
