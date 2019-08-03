@@ -7,11 +7,17 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import pl.coderslab.charity.service.UrlAuthenticationSuccessHandler;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Bean
+	public UrlAuthenticationSuccessHandler authenticationSuccessHandler(){
+		return new UrlAuthenticationSuccessHandler();
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -22,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/user/**").hasRole("USER")
 				.anyRequest().authenticated()
 				.and()
-				.formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
+				.formLogin().loginPage("/login").successHandler(authenticationSuccessHandler()).permitAll()
 				.and()
 				.logout().permitAll()
 				.and().exceptionHandling().accessDeniedPage("/403");

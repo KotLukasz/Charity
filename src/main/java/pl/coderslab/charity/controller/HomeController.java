@@ -43,7 +43,6 @@ public class HomeController {
 		if (customUser != null) {
 			User entityUser = customUser.getUser();
 			model.addAttribute("customUser", entityUser);
-			return "index";
 		}
 		return "index";
 	}

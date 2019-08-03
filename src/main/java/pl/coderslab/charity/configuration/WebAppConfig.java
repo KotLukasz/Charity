@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+
 import javax.validation.Validator;
 import java.util.Locale;
 
@@ -47,7 +48,6 @@ public class WebAppConfig implements WebMvcConfigurer {
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource
 				= new ReloadableResourceBundleMessageSource();
-
 		messageSource.setBasename("classpath:messages");
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
