@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.coderslab.charity.entity.Role;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
 	Role findByRole(String role);
 

@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -135,59 +135,33 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Users Information</h6>
-                    <a href="<c:url value="/admin/adminAdd"/>">Dodaj Administratora</a>
-                    <div>${adminCurrent}</div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Enabled</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${admins}" var="temp">
-                                <tr>
-                                    <td>${temp.firstName}</td>
-                                    <td>${temp.lastName}</td>
-                                    <td>${temp.email}</td>
-                                    <td>${temp.enabled}</td>
-                                    <td>
-                                        <a href="<c:url value="/admin/adminEdit/${temp.id}"/>">Edytuj</a>
-                                        <c:if test="${temp.enabled == 1}">
-                                            <a href="<c:url value="/admin/adminBlock/${temp.id}"/>">Zablokuj</a>
-                                        </c:if>
-                                        <c:if test="${temp.enabled == 0}">
-                                            <a href="<c:url value="/admin/adminUnBlock/${temp.id}"/>">Oblokuj</a>
-                                        </c:if>
-                                        <a href="<c:url value="/admin/adminDelete/${temp.id}"/>">Usuń</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+                <form:form modelAttribute="userEdit" method="post">
+                    <form:errors path="firstName"/>
+                    <div class="form-group">
+                        <form:input name="firstName" placeholder="Imię" path="firstName"/>
                     </div>
-                </div>
+                    <form:errors path="lastName"/>
+                    <div class="form-group">
+                        <form:input name="lastName" placeholder="Nazwisko" path="lastName"/>
+                    </div>
+                    <form:errors path="email"/>
+                    <div class="form-group">
+                        <form:input name="email" placeholder="Email" path="email"/> <div>${userExists}</div>
+                    </div>
+                    <form:errors path="password"/>
+                    <div class="form-group">
+                        <form:password name="password" placeholder="Hasło" path="password"/>
+                    </div>
+                    <button class="btn" type="submit">Zapisz</button>
+                </form:form>
             </div>
 
         </div>
     </div>
+
 </div>
-
-
-<!-- /.container-fluid -->
-
-
 <!-- End of Page Wrapper -->
 
 
@@ -195,18 +169,10 @@
 <script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
 <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="<c:url value="/resources/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
-
 <!-- Custom scripts for all pages-->
 <script src="<c:url value="/resources/js/sb-admin-2.min.js"/>"></script>
 
-<!-- Page level plugins -->
-<script src="<c:url value="/resources/vendor/chart.js/Chart.min.js"/>"></script>
 
-<!-- Page level custom scripts -->
-<script src="<c:url value="/resources/js/demo/chart-area-demo.js"/>"></script>
-<script src="<c:url value="/resources/js/demo/chart-pie-demo.js"/>"></script>
 </body>
 
 </html>

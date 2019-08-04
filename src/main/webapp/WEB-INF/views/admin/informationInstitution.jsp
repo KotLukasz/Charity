@@ -140,27 +140,29 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Users Information</h6>
+                  <a href="<c:url value="/admin/institutionAdd"/>">Dodaj Instytucje</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email</th>
-                                <th>Enabled</th>
+                                <th>Name</th>
+                                <th>Description</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${users}" var="temp">
+                            <c:forEach items="${institutionsList}" var="temp">
                                 <tr>
-                                    <td>${temp.firstName}</td>
-                                    <td>${temp.lastName}</td>
-                                    <td>${temp.email}</td>
-                                    <td>${temp.enabled}</td>
-                                    <td></td>
+                                    <td>${temp.name}</td>
+                                    <td>${temp.description}</td>
+                                    <td>
+                                        <a href="<c:url value="/admin/institutionEdit/${temp.id}"/>">Edytuj</a>
+                                        <a href="<c:url value="/admin/institutionDelete/${temp.id}"/>">Usuń</a>
+                                    </td>
+
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>

@@ -130,10 +130,8 @@
 
                 </ul>
             </nav>
-        </div>
-    </div>
-</div>
-            </nav>
+
+
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
@@ -142,7 +140,9 @@
 
             </div>
             <!-- End of Page Wrapper -->
-
+        </div>
+    </div>
+</div>
 
             <!-- Bootstrap core JavaScript-->
             <script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>

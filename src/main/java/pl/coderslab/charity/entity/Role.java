@@ -10,14 +10,14 @@ public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	private String role;
 
 	public Role() {
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 

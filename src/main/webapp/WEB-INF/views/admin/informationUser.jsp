@@ -155,15 +155,24 @@
                             </thead>
                             <tbody>
                             <c:forEach items="${users}" var="temp">
-                            <tr>
-                                <td>${temp.firstName}</td>
-                                <td>${temp.lastName}</td>
-                                <td>${temp.email}</td>
-                                <td>${temp.enabled}</td>
-                                <td>${temp.roles}</td>
-                            </tr>
+                                <tr>
+                                    <td>${temp.firstName}</td>
+                                    <td>${temp.lastName}</td>
+                                    <td>${temp.email}</td>
+                                    <td>${temp.enabled}</td>
+                                    <td>
+                                        <a href="<c:url value="/admin/userEdit/${temp.id}"/>">Edytuj</a>
+                                        <c:if test="${temp.enabled == 1}">
+                                        <a href="<c:url value="/admin/userBlock/${temp.id}"/>">Zablokuj</a>
+                                        </c:if>
+                                        <c:if test="${temp.enabled == 0}">
+                                            <a href="<c:url value="/admin/userUnBlock/${temp.id}"/>">Oblokuj</a>
+                                        </c:if>
+                                        <a href="<c:url value="/admin/userDelete/${temp.id}"/>">Usuń</a>
+                                    </td>
+                                </tr>
                             </c:forEach>
-                           </tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
