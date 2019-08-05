@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import pl.coderslab.charity.entity.User;
 
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,9 +27,11 @@ public class SpringDataUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String email) {
 		User user = userService.findByEmail(email);
 		if (user == null) {
-			throw new UsernameNotFoundException(email);
+			//TODO logging exceptions
+			throw new UsernameNotFoundException("User already exists!" + email);
 		} else if (user.getEnabled() == 0) {
-		throw new UsernameNotFoundException("Account is blocked!");
+			//TODO logging exceptions
+			throw new UsernameNotFoundException("Account is blocked!" + email);
 		}
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		user.getRoles().forEach(r ->
