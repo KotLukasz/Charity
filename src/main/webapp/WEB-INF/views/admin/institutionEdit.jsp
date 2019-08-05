@@ -59,9 +59,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<c:url value="/admin/userInfo"/>">Użytkownicy</a>
-                    <a class="collapse-item" href="<c:url value="/admin/adminInfo"/>">Administratorzy</a>
-                    <a class="collapse-item" href="<c:url value="/admin/institutionInfo"/>">Instytucje</a>
+                    <a class="collapse-item" href="<c:url value="/admin/user/info"/>">Użytkownicy</a>
+                    <a class="collapse-item" href="<c:url value="/admin/admin/info"/>">Administratorzy</a>
+                    <a class="collapse-item" href="<c:url value="/admin/institution/info"/>">Instytucje</a>
                 </div>
             </div>
         </li>

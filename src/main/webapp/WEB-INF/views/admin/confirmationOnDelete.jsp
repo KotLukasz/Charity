@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
 <!DOCTYPE html>
@@ -107,8 +108,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello ${customUser.firstName}</span>
-                            <img class="img-profile rounded-circle"
-                                 src="https://png.pngtree.com/svg/20170418/287473299e.png">
+                            <img class="img-profile rounded-circle" src="https://png.pngtree.com/svg/20170418/287473299e.png" >
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -132,72 +132,31 @@
                 </ul>
             </nav>
 
+
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Institution Information</h6>
-                  <a href="<c:url value="/admin/institution/add"/>">Dodaj Instytucje</a>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${institutionsList}" var="temp">
-                                <tr>
-                                    <td>${temp.name}</td>
-                                    <td>${temp.description}</td>
-                                    <td>
-                                        <a href="<c:url value="/admin/institution/edit/${temp.id}"/>">Edytuj</a>
-                                        <a href="<c:url value="/admin/institution/delete/${temp.id}"/>">Usuń</a>
-                                    </td>
-
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="container-fluid">
+                Czy na pewno chcesz to zrobić ?
+                <form:form method="post">
+                    <button class="btn" type="submit">Tak</button>
+                </form:form>
+                <a href="<c:url value="/admin"/>" class="btn">Anuluj</a>
             </div>
 
+            <!-- End of Page Wrapper -->
         </div>
     </div>
 </div>
-
-
-<!-- /.container-fluid -->
-
-
-<!-- End of Page Wrapper -->
-
 
 <!-- Bootstrap core JavaScript-->
 <script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
 <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="<c:url value="/resources/vendor/jquery-easing/jquery.easing.min.js"/>"></script>
-
 <!-- Custom scripts for all pages-->
 <script src="<c:url value="/resources/js/sb-admin-2.min.js"/>"></script>
 
-<!-- Page level plugins -->
-<script src="<c:url value="/resources/vendor/chart.js/Chart.min.js"/>"></script>
 
-<!-- Page level custom scripts -->
-<script src="<c:url value="/resources/js/demo/chart-area-demo.js"/>"></script>
-<script src="<c:url value="/resources/js/demo/chart-pie-demo.js"/>"></script>
 </body>
 
 </html>

@@ -59,9 +59,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<c:url value="/admin/userInfo"/>">Użytkownicy</a>
-                    <a class="collapse-item" href="<c:url value="/admin/adminInfo"/>">Administratorzy</a>
-                    <a class="collapse-item" href="<c:url value="/admin/institutionInfo"/>">Instytucje</a>
+                    <a class="collapse-item" href="<c:url value="/admin/user/info"/>">Użytkownicy</a>
+                    <a class="collapse-item" href="<c:url value="/admin/admin/info"/>">Administratorzy</a>
+                    <a class="collapse-item" href="<c:url value="/admin/institution/info"/>">Instytucje</a>
                 </div>
             </div>
         </li>
@@ -107,7 +107,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello ${customUser.firstName}</span>
-                            <img class="img-profile rounded-circle" src="https://png.pngtree.com/svg/20170418/287473299e.png" >
+                            <img class="img-profile rounded-circle"
+                                 src="https://png.pngtree.com/svg/20170418/287473299e.png">
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -137,6 +138,7 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
+                Strona Główna
 
             </div>
             <!-- End of Page Wrapper -->
@@ -144,12 +146,12 @@
     </div>
 </div>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
-            <script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="<c:url value="/resources/vendor/jquery/jquery.min.js"/>"></script>
+<script src="<c:url value="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="<c:url value="/resources/js/sb-admin-2.min.js"/>"></script>
+<!-- Custom scripts for all pages-->
+<script src="<c:url value="/resources/js/sb-admin-2.min.js"/>"></script>
 
 
 </body>

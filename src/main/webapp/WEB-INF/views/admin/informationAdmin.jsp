@@ -59,9 +59,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<c:url value="/admin/userInfo"/>">Użytkownicy</a>
-                    <a class="collapse-item" href="<c:url value="/admin/adminInfo"/>">Administratorzy</a>
-                    <a class="collapse-item" href="<c:url value="/admin/institutionInfo"/>">Instytucje</a>
+                    <a class="collapse-item" href="<c:url value="/admin/user/info"/>">Użytkownicy</a>
+                    <a class="collapse-item" href="<c:url value="/admin/admin/info"/>">Administratorzy</a>
+                    <a class="collapse-item" href="<c:url value="/admin/institution/info"/>">Instytucje</a>
                 </div>
             </div>
         </li>
@@ -139,8 +139,8 @@
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Users Information</h6>
-                    <a href="<c:url value="/admin/adminAdd"/>">Dodaj Administratora</a>
+                    <h6 class="m-0 font-weight-bold text-primary">Admin Information</h6>
+                    <a href="<c:url value="/admin/admin/add"/>">Dodaj Administratora</a>
                     <div>${adminCurrent}</div>
                 </div>
                 <div class="card-body">
@@ -163,14 +163,14 @@
                                     <td>${temp.email}</td>
                                     <td>${temp.enabled}</td>
                                     <td>
-                                        <a href="<c:url value="/admin/adminEdit/${temp.id}"/>">Edytuj</a>
+                                        <a href="<c:url value="/admin/admin/edit/${temp.id}"/>">Edytuj</a>
                                         <c:if test="${temp.enabled == 1}">
-                                            <a href="<c:url value="/admin/adminBlock/${temp.id}"/>">Zablokuj</a>
+                                            <a href="<c:url value="/admin/admin/block/${temp.id}"/>">Zablokuj</a>
                                         </c:if>
                                         <c:if test="${temp.enabled == 0}">
-                                            <a href="<c:url value="/admin/adminUnBlock/${temp.id}"/>">Oblokuj</a>
+                                            <a href="<c:url value="/admin/admin/unBlock/${temp.id}"/>">Oblokuj</a>
                                         </c:if>
-                                        <a href="<c:url value="/admin/adminDelete/${temp.id}"/>">Usuń</a>
+                                        <a href="<c:url value="/admin/admin/delete/${temp.id}"/>">Usuń</a>
                                     </td>
                                 </tr>
                             </c:forEach>

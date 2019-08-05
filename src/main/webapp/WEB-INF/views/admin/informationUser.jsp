@@ -59,9 +59,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<c:url value="/admin/userInfo"/>">Użytkownicy</a>
-                    <a class="collapse-item" href="<c:url value="/admin/adminInfo"/>">Administratorzy</a>
-                    <a class="collapse-item" href="<c:url value="/admin/institutionInfo"/>">Instytucje</a>
+                    <a class="collapse-item" href="<c:url value="/admin/user/info"/>">Użytkownicy</a>
+                    <a class="collapse-item" href="<c:url value="/admin/admin/info"/>">Administratorzy</a>
+                    <a class="collapse-item" href="<c:url value="/admin/institution/info"/>">Instytucje</a>
                 </div>
             </div>
         </li>
@@ -161,14 +161,14 @@
                                     <td>${temp.email}</td>
                                     <td>${temp.enabled}</td>
                                     <td>
-                                        <a href="<c:url value="/admin/userEdit/${temp.id}"/>">Edytuj</a>
+                                        <a href="<c:url value="/admin/user/edit/${temp.id}"/>">Edytuj</a>
                                         <c:if test="${temp.enabled == 1}">
-                                        <a href="<c:url value="/admin/userBlock/${temp.id}"/>">Zablokuj</a>
+                                        <a href="<c:url value="/admin/user/block/${temp.id}"/>">Zablokuj</a>
                                         </c:if>
                                         <c:if test="${temp.enabled == 0}">
-                                            <a href="<c:url value="/admin/userUnBlock/${temp.id}"/>">Oblokuj</a>
+                                            <a href="<c:url value="/admin/user/unBlock/${temp.id}"/>">Oblokuj</a>
                                         </c:if>
-                                        <a href="<c:url value="/admin/userDelete/${temp.id}"/>">Usuń</a>
+                                        <a href="<c:url value="/admin/user/delete/${temp.id}"/>">Usuń</a>
                                     </td>
                                 </tr>
                             </c:forEach>
