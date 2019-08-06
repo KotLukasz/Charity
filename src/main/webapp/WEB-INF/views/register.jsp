@@ -39,12 +39,7 @@
         <div class="form-group">
             <form:password name="password" placeholder="Hasło" path="password"/>
         </div>
-        <%--        <div class="form-group">--%>
-        <%--            <input name="password2" placeholder="Powtórz hasło"/>--%>
-        <%--        </div>--%>
-
         <div class="form-group form-group--buttons">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <a href="<c:url value="/login"/>" class="btn btn--without-border">Zaloguj się</a>
             <button class="btn" type="submit">Załóż konto</button>
         </div>

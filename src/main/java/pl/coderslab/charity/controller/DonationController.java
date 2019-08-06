@@ -13,6 +13,7 @@ import pl.coderslab.charity.entity.User;
 import pl.coderslab.charity.repository.CategoryRepository;
 import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.InstitutionRepository;
+import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.CurrentUser;
 
 import javax.validation.Valid;
@@ -31,6 +32,15 @@ public class DonationController {
 	@Autowired
 	private DonationRepository donationRepository;
 
+	@Autowired
+	private UserRepository userRepository;
+
+	@ModelAttribute("customUser")
+	public User customUser(@AuthenticationPrincipal CurrentUser currentUser) {
+		User customUser = currentUser.getUser();
+		return customUser;
+	}
+
 	@ModelAttribute("listCategory")
 	public List<Category> listCategory() {
 		return categoryRepository.findAll();
@@ -41,24 +51,26 @@ public class DonationController {
 		return institutionRepository.findAll();
 	}
 
-	@GetMapping("/addDonation")
-	public String saveDonation(Model model, @AuthenticationPrincipal CurrentUser customUser) {
-		User entityUser = customUser.getUser();
-		model.addAttribute("customUser", entityUser);
+	@GetMapping("/addDonation/{userId}")
+	public String saveDonation(Model model) {
 		model.addAttribute("donation", new Donation());
-		return "donation";
+		return "user/donationAdd";
 	}
 
-	@PostMapping("/addDonation")
-	public String saveDonation(@Valid @ModelAttribute Donation donation, BindingResult result, @AuthenticationPrincipal CurrentUser customUser, Model model) {
+	@PostMapping("/addDonation/{userId}")
+	public String saveDonation(@Valid @ModelAttribute Donation donation, BindingResult result, Model model, @PathVariable Long userId) {
 		if (result.hasErrors()) {
-			return "donation";
+			return "user/donationAdd";
 		}
-		User entityUser = customUser.getUser();
-		model.addAttribute("customUser", entityUser);
-		donation.setUser(entityUser);
+		donation.setUser(userRepository.getOne(userId));
 		donationRepository.save(donation);
-		return "donationConfirmation";
+		return "user/donationConfirmation";
+	}
+
+	@GetMapping("/donations/{userId}")
+	public String showDonations(@PathVariable Long userId, Model model) {
+		model.addAttribute("donations", donationRepository.findAllByUser(userRepository.getOne(userId)));
+		return "user/donationList";
 	}
 
 }

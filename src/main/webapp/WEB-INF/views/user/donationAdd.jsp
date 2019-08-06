@@ -18,7 +18,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <header class="header--form-page">
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="../header.jsp"/>
 
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -76,18 +76,6 @@
         <form:form modelAttribute="donation" method="post" id="form">
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
-                    <%--                <c:forEach items="${listCategory}" var="listCategory">--%>
-                    <%--                    <div class="form-group form-group--checkbox">--%>
-                    <%--                        <label>--%>
-                    <%--                            <form:checkbox path="categories"--%>
-                    <%--                                           value="${listCategory}"/>--%>
-                    <%--                            <span class="checkbox"></span>--%>
-                    <%--                            <span class="description">${listCategory.name}</span>--%>
-                    <%--                        </label>--%>
-                    <%--                    </div>--%>
-                    <%--                </c:forEach>--%>
-                    <%--                <div class="form-group form-group--buttons">--%>
-                <label>
                     <form:checkboxes path="categories" class="form-group form-group--checkbox"
                                      items="${listCategory}" itemValue="id" itemLabel="name" id="categoriesForm"/>
                 </label>
@@ -239,7 +227,7 @@
 </section>
 
 
-<jsp:include page="footer.jsp"/>
+<jsp:include page="../footer.jsp"/>
 
 <script type="text/javascript" src="<c:url value="/resources/js/app.js"/>"></script>
 

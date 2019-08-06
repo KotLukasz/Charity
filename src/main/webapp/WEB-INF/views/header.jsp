@@ -8,18 +8,15 @@
     <ul class="nav--actions">
         <li class="logged-user">
             Witaj ${customUser.firstName}!
-            <sec:authentication property="authorities"/>
             <ul class="dropdown">
-                <li><a href="#">Profil</a></li>
-                <li><a href="#">Ustawienia</a></li>
-                <li><a href="<c:url value="/user/donation/addDonation"/>">Dodaj zbórkę</a></li>
-                <li><a href="#">Moje zbiórki</a></li>
+                <li><a href="<c:url value="/user/edit/${customUser.id}"/>">Edycja danych</a></li>
+                <li><a href="<c:url value="/user/donation/addDonation/${customUser.id}"/>">Dodaj zbórkę</a></li>
+                <li><a href="<c:url value="/user/donation/donations/${customUser.id}"/>">Moje zbiórki</a></li>
                 <li>
                     <form action="<c:url value="/logout"/>" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input class="fa fa-id-badge" type="submit" value="Wyloguj">
                     </form>
-
                 </li>
             </ul>
         </li>

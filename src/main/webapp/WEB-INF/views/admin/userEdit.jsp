@@ -136,7 +136,6 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
                 <form:form modelAttribute="userEdit" method="post">
                     <form:errors path="firstName"/>
                     <div class="form-group">
