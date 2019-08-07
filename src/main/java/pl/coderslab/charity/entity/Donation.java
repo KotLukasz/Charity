@@ -3,10 +3,7 @@ package pl.coderslab.charity.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -44,6 +41,11 @@ public class Donation {
 	private LocalTime pickUpTime;
 
 	private String pickUpComment;
+
+	private boolean pickedUp;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate pickedUpDate;
 
 	public Donation() {
 	}
@@ -138,5 +140,21 @@ public class Donation {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public boolean isPickedUp() {
+		return pickedUp;
+	}
+
+	public void setPickedUp(boolean pickedUp) {
+		this.pickedUp = pickedUp;
+	}
+
+	public LocalDate getPickedUpDate() {
+		return pickedUpDate;
+	}
+
+	public void setPickedUpDate(LocalDate pickedUpDate) {
+		this.pickedUpDate = pickedUpDate;
 	}
 }

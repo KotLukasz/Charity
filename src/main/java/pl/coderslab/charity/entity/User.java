@@ -26,6 +26,7 @@ public class User {
 	@NotEmpty(message = "{email.notEmpty}")
 	private String email;
 
+//	For testing is disabled
 //	@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "{password.pattern}")
 	private String password;
 

@@ -58,11 +58,12 @@ public class DonationController {
 	}
 
 	@PostMapping("/addDonation/{userId}")
-	public String saveDonation(@Valid @ModelAttribute Donation donation, BindingResult result, Model model, @PathVariable Long userId) {
+	public String saveDonation(@Valid @ModelAttribute Donation donation, BindingResult result, @PathVariable Long userId) {
 		if (result.hasErrors()) {
 			return "user/donationAdd";
 		}
 		donation.setUser(userRepository.getOne(userId));
+		donation.setPickedUp(false);
 		donationRepository.save(donation);
 		return "user/donationConfirmation";
 	}
@@ -70,7 +71,14 @@ public class DonationController {
 	@GetMapping("/donations/{userId}")
 	public String showDonations(@PathVariable Long userId, Model model) {
 		model.addAttribute("donations", donationRepository.findAllByUser(userRepository.getOne(userId)));
+		model.addAttribute("donationPickUp", new Donation());
 		return "user/donationList";
+	}
+
+	@PostMapping("/donations/{userId}/{donationId}")
+	public String editPickUp(@PathVariable Long userId, @PathVariable Long donationId,@Valid @ModelAttribute Donation donation) {
+		donationRepository.updateSetPickedUpAndPickedUpDate(donationId, donation.isPickedUp(), donation.getPickedUpDate());
+		return "redirect:/user/donation/donations/" + userId;
 	}
 
 }

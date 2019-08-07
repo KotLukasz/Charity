@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    $("#btnDelivery").on("click", function () {
+        if ($('#datePickUp').val() == '') {
+            alert('Proszę wybierz date kiedy paczka zostala odebrana');
+            return false;
+        } else if (($("input[name='pickedUp']:checked").val() == null)) {
+            alert('Proszę zaznacz odpowiedni checkbox');
+            return false;
+        }
+    });
+
         /**
          * Form Select
          */
@@ -138,9 +148,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             let description = $('#description').val();
 
 
-                            $("input[name='categories']").on('change', function () {
-                                $("input[name='categories']:checked").css("background-color", "green");
-                            });
+                            // $("input[name='categories']").on('change', function () {
+                            //     $("input[name='categories']:checked").css("background-color", "green");
+                            // });
 
                             if ($("input[name='categories']:checked").val() == null) {
                                 alert('Proszę wybierz rodzaj kategorii');
@@ -233,4 +243,6 @@ document.addEventListener("DOMContentLoaded", function () {
             FormSteps(form);
         }
     }
+
+
 );
