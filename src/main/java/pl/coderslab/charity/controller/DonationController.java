@@ -70,7 +70,8 @@ public class DonationController {
 
 	@GetMapping("/donations/{userId}")
 	public String showDonations(@PathVariable Long userId, Model model) {
-		model.addAttribute("donations", donationRepository.findAllByUser(userRepository.getOne(userId)));
+//		model.addAttribute("donations", donationRepository.findAllByUser(userRepository.getOne(userId)));
+		model.addAttribute("donations", donationRepository.findAllByUserOrderByPickedUpPickedUpDateAsc(userRepository.getOne(userId)));
 		model.addAttribute("donationPickUp", new Donation());
 		return "user/donationList";
 	}

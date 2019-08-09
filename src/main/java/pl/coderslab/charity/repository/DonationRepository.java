@@ -30,4 +30,7 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
 	@Query("Update Donation d set d.pickedUp = :pickedUp, d.pickedUpDate = :pickedUpDate where d.id = :id")
 	void updateSetPickedUpAndPickedUpDate(@Param("id") Long id, @Param("pickedUp") boolean pickedUp, @Param("pickedUpDate") LocalDate pickedUpDate);
 
+	@Query("SELECT d FROM Donation d WHERE d.user = :user ORDER BY d.pickedUp, d.pickedUpDate ASC")
+	List<Donation>findAllByUserOrderByPickedUpPickedUpDateAsc (User user);
+
 }
