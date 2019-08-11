@@ -42,7 +42,7 @@ public class UserController {
 			return "user/userEdit";
 		}
 		User userExists = userRepository.findByEmail(userEdit.getEmail());
-		if (userRepository.getOne(userId).getEmail().equals(userEdit.getEmail()) || userExists == null) {
+		if (userExists == null || userRepository.getOne(userId).getEmail().equals(userEdit.getEmail())) {
 			userEdit.setPassword(passwordEncoder.encode(userEdit.getPassword()));
 			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPasswordAAndEnabled(userId, userEdit.getFirstName(), userEdit.getLastName(), userEdit.getEmail(), userEdit.getPassword());
 		} else if (userExists != null) {

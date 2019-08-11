@@ -1,6 +1,7 @@
 package pl.coderslab.charity.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +11,12 @@ import pl.coderslab.charity.entity.Category;
 import pl.coderslab.charity.entity.Donation;
 import pl.coderslab.charity.entity.Institution;
 import pl.coderslab.charity.entity.User;
-import pl.coderslab.charity.repository.CategoryRepository;
 import pl.coderslab.charity.repository.DonationRepository;
-import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.UserRepository;
+
+import pl.coderslab.charity.serviceCache.CategoryService;
 import pl.coderslab.charity.service.CurrentUser;
+import pl.coderslab.charity.serviceCache.InstitutionService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,10 +26,12 @@ import java.util.List;
 public class DonationController {
 
 	@Autowired
-	private InstitutionRepository institutionRepository;
+	@Qualifier("cacheCategoryService")
+	private CategoryService categoryService;
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	@Qualifier("cacheInstitutionService")
+	private InstitutionService institutionService;
 
 	@Autowired
 	private DonationRepository donationRepository;
@@ -43,12 +47,12 @@ public class DonationController {
 
 	@ModelAttribute("listCategory")
 	public List<Category> listCategory() {
-		return categoryRepository.findAll();
+		return categoryService.getAllCategories();
 	}
 
 	@ModelAttribute("listInstitutions")
 	public List<Institution> listInstitutions() {
-		return institutionRepository.findAll();
+		return institutionService.getAllInstitutions();
 	}
 
 	@GetMapping("/addDonation/{userId}")
@@ -70,14 +74,13 @@ public class DonationController {
 
 	@GetMapping("/donations/{userId}")
 	public String showDonations(@PathVariable Long userId, Model model) {
-//		model.addAttribute("donations", donationRepository.findAllByUser(userRepository.getOne(userId)));
 		model.addAttribute("donations", donationRepository.findAllByUserOrderByPickedUpPickedUpDateAsc(userRepository.getOne(userId)));
 		model.addAttribute("donationPickUp", new Donation());
 		return "user/donationList";
 	}
 
 	@PostMapping("/donations/{userId}/{donationId}")
-	public String editPickUp(@PathVariable Long userId, @PathVariable Long donationId,@Valid @ModelAttribute Donation donation) {
+	public String editPickUp(@PathVariable Long userId, @PathVariable Long donationId, @Valid @ModelAttribute Donation donation) {
 		donationRepository.updateSetPickedUpAndPickedUpDate(donationId, donation.isPickedUp(), donation.getPickedUpDate());
 		return "redirect:/user/donation/donations/" + userId;
 	}

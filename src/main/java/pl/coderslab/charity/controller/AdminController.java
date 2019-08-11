@@ -1,6 +1,7 @@
 package pl.coderslab.charity.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -10,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.entity.Institution;
 import pl.coderslab.charity.entity.Role;
 import pl.coderslab.charity.entity.User;
-import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.CurrentUser;
+import pl.coderslab.charity.serviceCache.InstitutionService;
 
 
 import javax.validation.Valid;
@@ -26,7 +27,8 @@ import java.util.List;
 public class AdminController {
 
 	@Autowired
-	private InstitutionRepository institutionRepository;
+	@Qualifier("cacheInstitutionService")
+	private InstitutionService institutionService;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -55,7 +57,7 @@ public class AdminController {
 
 	@ModelAttribute("institutionsList")
 	public List<Institution> institutionsList() {
-		return institutionRepository.findAll();
+		return institutionService.getAllInstitutions();
 	}
 
 	@GetMapping
@@ -113,7 +115,7 @@ public class AdminController {
 			return "admin/adminEdit";
 		}
 		User adminExists = userRepository.findByEmail(adminEdit.getEmail());
-		if (userRepository.getOne(adminID).getEmail().equals(adminEdit.getEmail()) || adminExists == null) {
+		if (adminExists == null || userRepository.getOne(adminID).getEmail().equals(adminEdit.getEmail())) {
 			adminEdit.setPassword(passwordEncoder.encode(adminEdit.getPassword()));
 			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPasswordAAndEnabled(adminID, adminEdit.getFirstName(), adminEdit.getLastName(), adminEdit.getEmail(), adminEdit.getPassword());
 		} else if (adminExists != null) {

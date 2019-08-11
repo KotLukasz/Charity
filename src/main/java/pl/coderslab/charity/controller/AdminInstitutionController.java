@@ -1,6 +1,8 @@
 package pl.coderslab.charity.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.CurrentUser;
+import pl.coderslab.charity.serviceCache.InstitutionService;
 
 
 import javax.validation.Valid;
@@ -26,13 +29,18 @@ public class AdminInstitutionController {
 	private InstitutionRepository institutionRepository;
 
 	@Autowired
+	@Qualifier("cacheInstitutionService")
+	private InstitutionService institutionService;
+
+	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
 	private RoleRepository roleRepository;
 
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	@Qualifier("institutions")
+	private CaffeineCache institutionsCache;
 
 	@ModelAttribute("customUser")
 	public User customUser(@AuthenticationPrincipal CurrentUser currentUser) {
@@ -52,7 +60,7 @@ public class AdminInstitutionController {
 
 	@ModelAttribute("institutionsList")
 	public List<Institution> institutionsList() {
-		return institutionRepository.findAll();
+		return institutionService.getAllInstitutions();
 	}
 
 	@GetMapping
@@ -83,6 +91,7 @@ public class AdminInstitutionController {
 			return "admin/institutionAdd";
 		}
 		institutionRepository.save(institution);
+		institutionsCache.clear();
 		return "admin/index";
 	}
 
@@ -94,6 +103,7 @@ public class AdminInstitutionController {
 	@PostMapping("/delete/{institutionId}")
 	public String institutionDelete(@PathVariable Long institutionId) {
 		institutionRepository.delete(institutionRepository.getOne(institutionId));
+		institutionsCache.clear();
 		return "admin/index";
 	}
 
@@ -109,12 +119,13 @@ public class AdminInstitutionController {
 			return "admin/institutionEdit";
 		}
 		Institution institutionExists = institutionRepository.findByName(institutionEdit.getName());
-		if (institutionRepository.getOne(institutionId).getName().equals(institutionEdit.getName()) || institutionExists == null) {
+		if (institutionExists == null ||institutionRepository.getOne(institutionId).getName().equals(institutionEdit.getName())) {
 			institutionRepository.updateSetNameAndAndDescription(institutionId, institutionEdit.getName(), institutionEdit.getDescription());
 		} else if (institutionExists != null) {
 			model.addAttribute("institutionExists", "There is already a institution registered with the name provided");
 			return "admin/institutionEdit";
 		}
+		institutionsCache.clear();
 		return "admin/index";
 	}
 

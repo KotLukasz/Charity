@@ -1,6 +1,7 @@
 package pl.coderslab.charity.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.CurrentUser;
+import pl.coderslab.charity.serviceCache.InstitutionService;
 
 
 import javax.validation.Valid;
@@ -25,7 +27,8 @@ import java.util.List;
 public class AdminUserController {
 
 	@Autowired
-	private InstitutionRepository institutionRepository;
+	@Qualifier("cacheInstitutionService")
+	private InstitutionService institutionService;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -54,7 +57,7 @@ public class AdminUserController {
 
 	@ModelAttribute("institutionsList")
 	public List<Institution> institutionsList() {
-		return institutionRepository.findAll();
+		return institutionService.getAllInstitutions();
 	}
 
 	@GetMapping
@@ -103,7 +106,7 @@ public class AdminUserController {
 			return "admin/userEdit";
 		}
 		User userExists = userRepository.findByEmail(userEdit.getEmail());
-		if (userRepository.getOne(userId).getEmail().equals(userEdit.getEmail()) || userExists == null) {
+		if (userExists == null || userRepository.getOne(userId).getEmail().equals(userEdit.getEmail())) {
 			userEdit.setPassword(passwordEncoder.encode(userEdit.getPassword()));
 			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPasswordAAndEnabled(userId, userEdit.getFirstName(), userEdit.getLastName(), userEdit.getEmail(), userEdit.getPassword());
 		} else if (userExists != null) {
