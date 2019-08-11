@@ -44,7 +44,7 @@ public class UserController {
 		User userExists = userRepository.findByEmail(userEdit.getEmail());
 		if (userExists == null || userRepository.getOne(userId).getEmail().equals(userEdit.getEmail())) {
 			userEdit.setPassword(passwordEncoder.encode(userEdit.getPassword()));
-			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPasswordAAndEnabled(userId, userEdit.getFirstName(), userEdit.getLastName(), userEdit.getEmail(), userEdit.getPassword());
+			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPassword(userId, userEdit.getFirstName(), userEdit.getLastName(), userEdit.getEmail(), userEdit.getPassword());
 		} else if (userExists != null) {
 			model.addAttribute("userExists", "There is already a user registered with the email provided");
 			return "user/userEdit";

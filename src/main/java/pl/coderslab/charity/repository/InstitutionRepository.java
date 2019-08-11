@@ -13,6 +13,8 @@ public interface InstitutionRepository extends JpaRepository<Institution, Long> 
 
 	Institution findByName(String name);
 
+	Institution findByDescription(String description);
+
 	@Transactional
 	@Modifying(clearAutomatically = true)
 	@Query("Update Institution i set i.name = :name, i.description =:description where i.id = :id")

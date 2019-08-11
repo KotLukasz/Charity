@@ -117,7 +117,7 @@ public class AdminController {
 		User adminExists = userRepository.findByEmail(adminEdit.getEmail());
 		if (adminExists == null || userRepository.getOne(adminID).getEmail().equals(adminEdit.getEmail())) {
 			adminEdit.setPassword(passwordEncoder.encode(adminEdit.getPassword()));
-			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPasswordAAndEnabled(adminID, adminEdit.getFirstName(), adminEdit.getLastName(), adminEdit.getEmail(), adminEdit.getPassword());
+			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPassword(adminID, adminEdit.getFirstName(), adminEdit.getLastName(), adminEdit.getEmail(), adminEdit.getPassword());
 		} else if (adminExists != null) {
 			model.addAttribute("adminExists", "There is already a admin registered with the email provided");
 			return "admin/adminEdit";

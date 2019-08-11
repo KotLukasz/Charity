@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.entity.Institution;
 
 import pl.coderslab.charity.entity.User;
-import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.CurrentUser;
@@ -108,7 +107,7 @@ public class AdminUserController {
 		User userExists = userRepository.findByEmail(userEdit.getEmail());
 		if (userExists == null || userRepository.getOne(userId).getEmail().equals(userEdit.getEmail())) {
 			userEdit.setPassword(passwordEncoder.encode(userEdit.getPassword()));
-			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPasswordAAndEnabled(userId, userEdit.getFirstName(), userEdit.getLastName(), userEdit.getEmail(), userEdit.getPassword());
+			userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPassword(userId, userEdit.getFirstName(), userEdit.getLastName(), userEdit.getEmail(), userEdit.getPassword());
 		} else if (userExists != null) {
 			model.addAttribute("userExists", "There is already a user registered with the email provided");
 			return "admin/userEdit";
