@@ -29,14 +29,14 @@ public class RoleRepositoryTest {
 		assertThat(role.getRole(), is(roleName));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void givenNotExistingRole_whenFindByRole_thenRoleIsNull () {
 		//given
 		String roleName = "ROLE_USER_ONE";
 		//when
 		Role role = roleRepository.findByRole(roleName);
 		//then
-		assertThat(role.getRole(), is(roleName));
+		assertNull(role);
 	}
 
 

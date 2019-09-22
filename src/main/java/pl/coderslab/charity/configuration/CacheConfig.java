@@ -24,7 +24,6 @@ public class CacheConfig {
 				Caffeine.newBuilder()
 						.expireAfterAccess(1, TimeUnit.DAYS)
 						.build());
-
 	}
 
 }

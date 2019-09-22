@@ -26,7 +26,7 @@ public class InstitutionRepositoryTest {
 		//when
 		Institution institution = institutionRepository.findByName(name);
 		//then
-		assertThat(institution, notNullValue());
+		assertNotNull(institution);
 	}
 
 	@Test
@@ -38,8 +38,9 @@ public class InstitutionRepositoryTest {
 		String description = "Dla ubogich";
 		//when
 		institutionRepository.updateSetNameAndAndDescription(id, name, description);
+		Institution institutionFromRepository = institutionRepository.getOne(id);
 		//then
-		assertThat(name, is(institutionRepository.getOne(id).getName()));
-		assertThat(description, is(institutionRepository.getOne(id).getDescription()));
+		assertThat(name, is(institutionFromRepository.getName()));
+		assertThat(description, is(institutionFromRepository.getDescription()));
 	}
 }

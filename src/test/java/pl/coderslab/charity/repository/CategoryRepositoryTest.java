@@ -18,34 +18,35 @@ public class CategoryRepositoryTest {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	private static Category book;
+	private static Category category;
+	private final static String BOOK_CATEGORY_NAME = "Book";
 
 	@BeforeClass
 	public static void categorySample () {
-		book = new Category();
-		book.setName("Book");
+		category = new Category();
+		category.setName(BOOK_CATEGORY_NAME);
 	}
 
 	@Test
 	public void whenAddingCategory_thenCategoryIsAdded() {
 		//given
+		categoryRepository.save(category);
 		//when
-		categoryRepository.save(book);
+		Category categoryFromRepository = categoryRepository.findByName(BOOK_CATEGORY_NAME);
 		//then
-		assertEquals(categoryRepository.findByName("Book").getName(), book.getName());
-		assertEquals(categoryRepository.findByName("zabawki").getName(),"zabawki");
+		assertEquals(category, categoryFromRepository);
 	}
 
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void whenDeletingCategory_thenCategoryIsDeleted() {
 		//given
 		//when
-		categoryRepository.delete(book);
-		categoryRepository.delete(categoryRepository.findByName("zabawki"));
+		categoryRepository.save(category);
+		categoryRepository.delete(category);
+		Category categoryFromRepository = categoryRepository.findByName(BOOK_CATEGORY_NAME);
 		//then
-		assertEquals(categoryRepository.findByName("Book").getName(), book.getName());
-		assertEquals(categoryRepository.findByName("zabawki").getName(),"zabawki");
+		assertNull(categoryFromRepository);
 	}
 
 }

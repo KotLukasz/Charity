@@ -38,16 +38,22 @@ public class UserRepositoryTest {
 
 	@Test
 	public void givenRoles_whenFindUsersByRoles_thenUsersWithGivenRole() {
-		//given
+	//given
 		Role roleAdmin = roleRepository.findByRole("ROLE_ADMIN");
-		Role roleUser = roleRepository.findByRole("ROLE_USER");
-		//when
+	//when
 		List<User> usersAdmin = userRepository.findUsersByRoles(roleAdmin);
-		List<User> usersUser = userRepository.findUsersByRoles(roleUser);
-		//then
+	//then
 		assertThat(usersAdmin, notNullValue());
-		assertThat(usersUser, hasSize(0));
+	}
 
+	@Test
+	public void givenRoles_whenFindUsersByUserRole_thenUsersWithGivenRoleIsEmpty() {
+	//given
+		Role roleUser = roleRepository.findByRole("ROLE_USER");
+	//when
+		List<User> usersUser = userRepository.findUsersByRoles(roleUser);
+	//then
+		assertThat(usersUser, hasSize(0));
 	}
 
 	@Test
@@ -55,21 +61,25 @@ public class UserRepositoryTest {
 	public void givenFirstNameAndLastNameAndEmailAndPasswordAndEnabled_whenUpdateUser_thenUserIsUpdated() {
 		//given
 		User user = userRepository.findByEmail("admin@admin");
+		String firstName = "Ola";
+		String lastName = "Xxx";
+		String email = "Ola@xxx";
+		String password = "123";
 		//when
-		userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPassword(user.getId(), "Ola", "Xxx", "Ola@xxx", "123");
+		userRepository.updateUserSetFirstNameAndLastNameAndEmailAndPassword(user.getId(), firstName, lastName, email, password);
 		String emailToCompare = userRepository.getOne(user.getId()).getEmail();
 		//then
-		assertThat(emailToCompare, is("Ola@xxx"));
+		assertThat(emailToCompare, is(email));
 	}
 
 	@Test
 	@Transactional
-	public void givenEnabled_whenUpdateUser_thenEnabledUpdated () {
+	public void givenEnabled_whenUpdateUser_thenEnabledUpdated() {
 		//given
 		int enabled = 0;
 		//when
 		User user = userRepository.findByEmail("admin@admin");
-		userRepository.updateUserSetEnabled(user.getId(),0);
+		userRepository.updateUserSetEnabled(user.getId(), 0);
 		//then
 		assertThat(enabled, is(userRepository.findByEmail("admin@admin").getEnabled()));
 	}
